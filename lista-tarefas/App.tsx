@@ -13,7 +13,7 @@ export default function App() {
     <NativeBaseProvider>
       <View style={{flex: 1}}>
         <AdicionarTarefa onAdicionarTarefa={adicionarTarefa} />
-        <ListaTarefas tarefas={tarefas}/>
+        <ListaTarefas tarefas={tarefas}/> 
       </View>
     </NativeBaseProvider>
   );
