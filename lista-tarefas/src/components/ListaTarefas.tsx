@@ -30,15 +30,17 @@ const TarefaItem: React.FC<TarefaItemProps> = ({ id, titulo}) => {
             p={4}
             my={2}
             mx={2}
+            borderRadius={8}
         >
             {editando ? (
                     < Input
                     flex={3}
                     value={novoTitulo}
                     onChangeText={setNovoTitulo}
+                    fontSize={18}
                     />
                 ) : (
-                    <Text flex={3}> {titulo} </Text>
+                    <Text flex={3} fontSize={18}> {titulo} </Text>
                 )}
                 <IconButton
                     icon={<Ionicons name={editando ? "checkmark" : "pencil"} size={14} color="#402291"/>}
@@ -59,6 +61,7 @@ const ListaTarefas: React.FC = () => {
             renderItem={({item}) => <TarefaItem id={item.id} titulo={item.titulo}/>}
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={{ flexGrow: 1}}
+            style={{width: '100%', backgroundColor: '#402291'}}
         />
     );
 };

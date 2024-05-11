@@ -28,7 +28,7 @@ const AdicionarTarefa: React.FC = () => {
                         placeholderTextColor = "white"
                         value={novaTarefa}
                         onChangeText={setNovaTarefa}
-                        fontSize={14}
+                        fontSize={18}
                         color="white"
                     />
                 </View>    
