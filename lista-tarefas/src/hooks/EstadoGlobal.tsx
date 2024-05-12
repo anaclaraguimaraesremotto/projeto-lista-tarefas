@@ -58,27 +58,6 @@ export const ProvedorEstadoGlobal: React.FC<{children: React.ReactNode}> = ({chi
             console.error('Erro ao adicionar aa tarefa', error)
             }
         }
-
-    const adicionarTarefa = async (titulo: string) => {
-        try{
-            const response = await fetch('http://localhost:3000/tarefas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({tarefa: titulo }),
-            });
-            if (!response.ok) {
-                throw new Error('Não foi possivel adicionar a tarefa')
-            }
-            const data = await response.json();
-            console.log('Nova tarefa adicionada:', data);
-            setTarefas([...tarefas, data])
-            
-        } catch (error) {
-            console.error('Erro ao adicionar aa tarefa', error)
-            }
-        }
         const editarTarefa = async (id: number, novoTitulo: string) => {
             try{
                 const response = await fetch(`http://localhost:3000/tarefas/${id}`, {
@@ -121,61 +100,7 @@ export const ProvedorEstadoGlobal: React.FC<{children: React.ReactNode}> = ({chi
                 useEffect(() =>{
                     carregarTarefas();
                 }, []);
-    }
-
-    const [isRecarregandoTela, setIsRecarregandoTela] = useState(true);
-
-    const adicionarTarefa = (titulo: string) => {
-        const novaTarefa: Tarefa = {
-            id: Date.now(),
-            titulo,
-        };
-        setTarefas([...tarefas, novaTarefa]);
-
-        salvarTarefas(tarefas);
-    };
-
-    const editarTarefa = (id: number, novoTitulo: string) => {
-        const novasTarefas = tarefas.map(tarefa => tarefa.id === id ? {...tarefa, titulo: novoTitulo} : tarefa);
-        setTarefas(novasTarefas);
-        salvarTarefas(tarefas);
-    };
-
-    const excluirTarefa = (id: number) => {
-        const novasTarefas = tarefas.filter(tarefa => tarefa.id !== id);
-        setTarefas(novasTarefas);
-        salvarTarefas(tarefas);
-    };
-
-    useEffect(() => {
-        const carregarTarefas = async () => {
-            try {
-                const tarefasArmazenadas = await AsyncStorage.getItem('tarefas');
-                if (tarefasArmazenadas) {
-                    setTarefas(JSON.parse(tarefasArmazenadas))
-                }
-            } catch (error){
-                console.error(error);
-            }
-
-            setIsRecarregandoTela(false);
-        }
-        carregarTarefas();
-    }, []);
-
-    useEffect(() => {
-        salvarTarefas(tarefas);
-    }, [tarefas]);
-
-    const salvarTarefas = async (tarefas: Tarefa[]) => {
-        if (!isRecarregandoTela) {
-            try {
-                await AsyncStorage.setItem('tarefas', JSON.stringify(tarefas));
-            } catch (error) {
-                console.error(error);
-            }
-        }
-    }
+    
 
     return(
         <ContextoEstadoGlobal.Provider value={{tarefas, adicionarTarefa, editarTarefa, excluirTarefa}}>
